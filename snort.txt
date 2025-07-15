@@ -1,0 +1,225 @@
+snort -c /etc/snort/snort.conf -A console -q -l /var/log/snort -i <interface>
+snort -c /etc/snort/snort.conf -A console -q -l /var/log/snort -i enp0s3
+
+-v verbose
+-d application data
+-e data link layer headers
+-c path to configuration file
+-A console sets the alert mode to display alerts on console
+-q Runs snort in quiet mode
+-l specifies directory for logging
+-i specifies interface to listen on
+
+
+
+┌──(alvan㉿vbox)-[~/Downloads]
+└─$ ssh alvan@192.168.0.4    
+alvan@192.168.0.4's password: 
+Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-60-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Wed Jun 25 07:26:51 AM UTC 2025
+
+  System load:  0.58               Processes:               126
+  Usage of /:   53.2% of 24.44GB   Users logged in:         0
+  Memory usage: 13%                IPv4 address for enp0s3: 192.168.0.4
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+142 updates can be applied immediately.
+81 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Wed Jun 25 07:26:58 2025 from 192.168.0.6
+alvan@mail:~$ ls /etc/snort
+attribute_table.dtd  classification.config  file_magic.conf  reference.config  snort.conf         threshold.conf  wazuh-install-files.tar
+barnyard2.conf       community-sid-msg.map  gen-msg.map      rules             snort.debian.conf  unicode.map     wazuh-install.sh
+alvan@mail:~$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:2f:10:a4 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.4/24 metric 100 brd 192.168.0.255 scope global dynamic enp0s3
+       valid_lft 415sec preferred_lft 415sec
+    inet6 fe80::a00:27ff:fe2f:10a4/64 scope link 
+       valid_lft forever preferred_lft forever
+3: enp0s8: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 08:00:27:57:89:3c brd ff:ff:ff:ff:ff:ff
+alvan@mail:~$ snort -c /etc/snort/snort.conf -A console -q -l /var/log/snort -i enp0s3
+ERROR: /etc/snort/snort.conf(0) Unable to open rules file "/etc/snort/snort.conf": Permission denied.
+
+Fatal Error, Quitting..
+alvan@mail:~$ sudo snort -c /etc/snort/snort.conf -A console -q -l /var/log/snort -i enp0s3
+[sudo] password for alvan: 
+07/10-14:13:18.027533  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43362 -> 192.168.0.4:22
+07/10-14:13:18.033549  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43402 -> 192.168.0.4:22
+07/10-14:13:18.031160  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43354 -> 192.168.0.4:22
+07/10-14:13:18.031160  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43340 -> 192.168.0.4:22
+07/10-14:13:18.031159  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43320 -> 192.168.0.4:22
+07/10-14:13:18.007549  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43284 -> 192.168.0.4:22
+07/10-14:13:18.027534  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43374 -> 192.168.0.4:22
+07/10-14:13:18.035598  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43412 -> 192.168.0.4:22
+07/10-14:13:18.031160  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43332 -> 192.168.0.4:22
+07/10-14:13:18.022535  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43382 -> 192.168.0.4:22
+07/10-14:13:19.092017  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43312 -> 192.168.0.4:22
+07/10-14:13:18.031160  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43408 -> 192.168.0.4:22
+07/10-14:13:19.260033  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43362 -> 192.168.0.4:22
+07/10-14:13:18.027534  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43392 -> 192.168.0.4:22
+07/10-14:13:19.083431  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43298 -> 192.168.0.4:22
+07/10-14:13:18.031161  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43400 -> 192.168.0.4:22
+07/10-14:13:19.473044  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43374 -> 192.168.0.4:22
+07/10-14:13:19.449169  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43284 -> 192.168.0.4:22
+07/10-14:13:19.176901  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43376 -> 192.168.0.4:22
+07/10-14:13:19.334072  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43402 -> 192.168.0.4:22
+07/10-14:13:19.371859  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43340 -> 192.168.0.4:22
+07/10-14:13:19.693863  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43362 -> 192.168.0.4:22
+07/10-14:13:19.580976  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43332 -> 192.168.0.4:22
+07/10-14:13:19.304098  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43320 -> 192.168.0.4:22
+07/10-14:13:19.564310  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43382 -> 192.168.0.4:22
+07/10-14:13:19.823840  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43408 -> 192.168.0.4:22
+07/10-14:13:19.642117  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43412 -> 192.168.0.4:22
+07/10-14:13:19.635084  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43392 -> 192.168.0.4:22
+07/10-14:13:19.896874  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43400 -> 192.168.0.4:22
+07/10-14:13:19.276025  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43354 -> 192.168.0.4:22
+07/10-14:13:28.240123  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43376 -> 192.168.0.4:22
+07/10-14:13:28.352967  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43374 -> 192.168.0.4:22
+07/10-14:13:28.730263  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43382 -> 192.168.0.4:22
+07/10-14:13:28.812215  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43340 -> 192.168.0.4:22
+07/10-14:13:28.797143  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43332 -> 192.168.0.4:22
+07/10-14:13:19.844202  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43402 -> 192.168.0.4:22
+07/10-14:13:20.343790  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43392 -> 192.168.0.4:22
+07/10-14:13:28.223417  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43298 -> 192.168.0.4:22
+07/10-14:13:28.326992  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43312 -> 192.168.0.4:22
+07/10-14:13:28.335894  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43284 -> 192.168.0.4:22
+07/10-14:13:20.234812  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43408 -> 192.168.0.4:22
+07/10-14:13:28.898788  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43362 -> 192.168.0.4:22
+07/10-14:13:28.918975  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43400 -> 192.168.0.4:22
+07/10-14:13:35.381114  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43376 -> 192.168.0.4:22
+07/10-14:13:31.924233  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43354 -> 192.168.0.4:22
+07/10-14:13:28.797143  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43320 -> 192.168.0.4:22
+07/10-14:13:28.819893  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43412 -> 192.168.0.4:22
+07/10-14:13:35.535457  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43374 -> 192.168.0.4:22
+07/10-14:13:39.534143  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43340 -> 192.168.0.4:22
+07/10-14:13:39.563015  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43332 -> 192.168.0.4:22
+07/10-14:13:39.642457  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43408 -> 192.168.0.4:22
+07/10-14:13:39.655944  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43392 -> 192.168.0.4:22
+07/10-14:13:36.134213  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43402 -> 192.168.0.4:22
+07/10-14:13:43.141035  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43320 -> 192.168.0.4:22
+07/10-14:13:39.501664  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43382 -> 192.168.0.4:22
+07/10-14:14:14.511897  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60746 -> 192.168.0.4:22
+07/10-14:14:14.562400  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60754 -> 192.168.0.4:22
+07/10-14:14:14.619883  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60746 -> 192.168.0.4:22
+07/10-14:14:14.637766  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60754 -> 192.168.0.4:22
+07/10-14:14:14.724157  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60758 -> 192.168.0.4:22
+07/10-14:14:14.749461  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60766 -> 192.168.0.4:22
+07/10-14:14:14.769012  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60778 -> 192.168.0.4:22
+07/10-14:14:14.859123  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60782 -> 192.168.0.4:22
+07/10-14:14:14.951856  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60758 -> 192.168.0.4:22
+07/10-14:14:14.949234  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60778 -> 192.168.0.4:22
+07/10-14:14:14.948284  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60766 -> 192.168.0.4:22
+07/10-14:14:15.003875  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60782 -> 192.168.0.4:22
+07/10-14:14:15.251982  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60788 -> 192.168.0.4:22
+07/10-14:14:15.372495  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:59456 -> 192.168.0.4:22
+07/10-14:14:15.347401  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:59452 -> 192.168.0.4:22
+07/10-14:14:15.410605  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60788 -> 192.168.0.4:22
+07/10-14:14:15.432417  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:59470 -> 192.168.0.4:22
+07/10-14:14:15.511935  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:59456 -> 192.168.0.4:22
+07/10-14:14:15.501288  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:59452 -> 192.168.0.4:22
+07/10-14:14:15.561146  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:59470 -> 192.168.0.4:22
+07/10-14:14:23.972219  [**] [1:249:8] DDOS mstream client to handler [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 192.168.0.6:63393 -> 192.168.0.4:15104
+07/10-14:14:24.492150  [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:63393 -> 192.168.0.4:161
+07/10-14:14:51.423184  [**] [1:1420:11] SNMP trap tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:63393 -> 192.168.0.4:162
+07/10-14:15:00.120605  [**] [1:1421:11] SNMP AgentX/tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:63393 -> 192.168.0.4:705
+07/10-14:15:07.731059  [**] [1:1000011:0] Ping request detected [**] [Priority: 0] {ICMP} 192.168.0.6 -> 192.168.0.4
+07/10-14:15:08.732892  [**] [1:1000011:0] Ping request detected [**] [Priority: 0] {ICMP} 192.168.0.6 -> 192.168.0.4
+07/10-14:15:09.734009  [**] [1:1000011:0] Ping request detected [**] [Priority: 0] {ICMP} 192.168.0.6 -> 192.168.0.4
+07/10-14:15:10.735901  [**] [1:1000011:0] Ping request detected [**] [Priority: 0] {ICMP} 192.168.0.6 -> 192.168.0.4
+07/10-14:15:11.738279  [**] [1:1000011:0] Ping request detected [**] [Priority: 0] {ICMP} 192.168.0.6 -> 192.168.0.4
+07/10-14:15:12.741217  [**] [1:1000011:0] Ping request detected [**] [Priority: 0] {ICMP} 192.168.0.6 -> 192.168.0.4
+^C*** Caught Int-Signal
+07/10-14:14:15.618054  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:59456 -> 192.168.0.4:22
+07/10-14:14:15.487759  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60788 -> 192.168.0.4:22
+07/10-14:14:15.141338  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60782 -> 192.168.0.4:22
+07/10-14:14:15.041896  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:60758 -> 192.168.0.4:22
+07/10-14:13:46.824915  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43392 -> 192.168.0.4:22
+07/10-14:13:46.764996  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43332 -> 192.168.0.4:22
+07/10-14:13:43.154151  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43412 -> 192.168.0.4:22
+07/10-14:13:46.669944  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43340 -> 192.168.0.4:22
+07/10-14:13:39.764135  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43400 -> 192.168.0.4:22
+07/10-14:13:39.671456  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43362 -> 192.168.0.4:22
+07/10-14:13:39.256707  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43284 -> 192.168.0.4:22
+07/10-14:13:42.733222  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43354 -> 192.168.0.4:22
+07/10-14:13:39.100109  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43312 -> 192.168.0.4:22
+07/10-14:13:42.525239  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43376 -> 192.168.0.4:22
+07/10-14:13:38.911908  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43298 -> 192.168.0.4:22
+07/10-14:13:17.640926  [**] [1:1000001:1] SSH brute force attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.0.6:43278 -> 192.168.0.4:22
+alvan@mail:~$ 
+
+┌──(alvan㉿vbox)-[/root]
+└─$ hydra -l admin -P /usr/share/wordlists/rockyou.txt    ssh://192.168.0.4
+Hydra v9.5 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2025-07-15 10:03:51
+[WARNING] Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t 4
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 14344400 login tries (l:1/p:14344400), ~896525 tries per task
+[DATA] attacking ssh://192.168.0.4:22/
+[STATUS] 120.00 tries/min, 120 tries in 00:01h, 14344282 to do in 1992:16h, 14 active
+
+Interesting rules like this 
+alvan@mail:~$ tail /etc/snort/rules/porn.rules
+alert tcp $EXTERNAL_NET $HTTP_PORTS -> $HOME_NET any (msg:"PORN raw sex"; content:"raw sex"; nocase; flow:to_client,established; classtype:kickass-porn; sid:1786; rev:1;)
+# alert tcp $EXTERNAL_NET $HTTP_PORTS -> $HOME_NET any (msg:"PORN fetish"; content:"fetish"; nocase; flow:to_client,established; classtype:kickass-porn; sid:1793; rev:1;)
+alert tcp $EXTERNAL_NET $HTTP_PORTS -> $HOME_NET any (msg:"PORN masturbation"; content:"masturbat"; nocase; flow:to_client,established; classtype:kickass-porn; sid:1794; rev:1;)
+alert tcp $EXTERNAL_NET $HTTP_PORTS -> $HOME_NET any (msg:"PORN ejaculation"; content:"ejaculat"; nocase; flow:to_client,established; classtype:kickass-porn; sid:1795; rev:1;)
+# alert tcp $EXTERNAL_NET $HTTP_PORTS -> $HOME_NET any (msg:"PORN virgin"; content:"virgin "; nocase; flow:to_client,established; classtype:kickass-porn; sid:1796; rev:2;)
+alert tcp $EXTERNAL_NET $HTTP_PORTS -> $HOME_NET any (msg:"PORN BDSM"; content:"BDSM"; nocase; flow:to_client,established; classtype:kickass-porn; sid:1797; rev:1;)
+# alert tcp $EXTERNAL_NET $HTTP_PORTS -> $HOME_NET any (msg:"PORN erotica"; content:"erotic"; nocase; flow:to_client,established; classtype:kickass-porn; sid:1798; rev:1;)
+# alert tcp $EXTERNAL_NET $HTTP_PORTS -> $HOME_NET any (msg:"PORN fisting"; content:"fisting"; nocase; flow:to_client,established; classtype:kickass-porn; sid:1799; rev:1;)
+alert tcp $EXTERNAL_NET $HTTP_PORTS -> $HOME_NET any (msg:"PORN naked lesbians"; content:"naked lesbians"; nocase; flow:to_client,established; classtype:kickass-porn; sid:1833; rev:1;)
+
+alvan@mail:~$ ls /etc/snort/rules/
+attack-responses.rules         community-web-dos.rules   policy.rules
+backdoor.rules                 community-web-iis.rules   pop2.rules
+bad-traffic.rules              community-web-misc.rules  pop3.rules
+chat.rules                     community-web-php.rules   porn.rules
+community-bot.rules            ddos.rules                rpc.rules
+community-deleted.rules        deleted.rules             rservices.rules
+community-dos.rules            dns.rules                 sample_rules.conf
+community-exploit.rules        dos.rules                 scan.rules
+community-ftp.rules            experimental.rules        shellcode.rules
+community-game.rules           exploit.rules             smtp.rules
+community-icmp.rules           finger.rules              snmp.rules
+community-imap.rules           ftp.rules                 sql.rules
+community-inappropriate.rules  icmp-info.rules           telnet.rules
+community-mail-client.rules    icmp.rules                tftp.rules
+community-misc.rules           imap.rules                virus.rules
+community-nntp.rules           info.rules                web-attacks.rules
+community-oracle.rules         local.rules               web-cgi.rules
+community-policy.rules         misc.rules                web-client.rules
+community-sip.rules            multimedia.rules          web-coldfusion.rules
+community-smtp.rules           mysql.rules               web-frontpage.rules
+community-sql-injection.rules  netbios.rules             web-iis.rules
+community-virus.rules          nntp.rules                web-misc.rules
+community-web-attacks.rules    oracle.rules              web-php.rules
+community-web-cgi.rules        other-ids.rules           x11.rules
+community-web-client.rules     p2p.rules
+
+
+
+#Visualizing logs using SPLUNK
